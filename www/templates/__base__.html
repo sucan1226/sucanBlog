@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    {% block meta %}<!-- block meta  -->{% endblock %}
+    <title>{% block title %} ? {% endblock %} - Awesome Python Webapp</title>
+    <link rel="stylesheet" href="/static/css/uikit.min.css">
+    <link rel="stylesheet" href="/static/css/uikit.gradient.min.css">
+    <link rel="stylesheet" href="/static/css/awesome.css">
+    <link rel="stylesheet" href="/static/css/uikit.almost-flat.min.css">
+    <link rel="stylesheet" href="/static/css/highlight.css">
+    <link rel="stylesheet" href="/static/css/myBlog.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/uikit.min.js"></script>
+    <script src="/static/js/awesome.js"></script>
+    <script src="/static/js/vue.min.js"></script>
+    <script src="/static/js/sha1.min.js"></script>
+    <img src="../static/img/抓取淘宝评论-1.png" height="49" width="677"/>
+    {% block beforehead %}<!-- before head  -->{% endblock %}
+</head>
+<body>
+  <div class="container">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+        <!-- <nav class="navbar navbar-inverse"> -->
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only"> </span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <li data-uk-offcanvas="{target:'#slidingBar'}" data-uk-tooltip="{pos:'bottom-left'}" data-uk-scrollspy="{cls:'uk-animation-fade', delay:0}">
+                    <a class="navbar-brand" href="/" style="background: #000; padding-top: 10px;">
+                            <span class="glyphicon glyphicon-align-justify" title="显示侧滑菜单"></span>
+                     </a>
+                    </li>
+                    <!-- 这是抽屉式边栏 -->
+                </div>
+
+                <div class="collapse navbar-collapse" id="collapse">
+                    <ul class="nav navbar-nav" id="navbar-left">
+                        <li><a href="/"><span class="glyphicon glyphicon-home" data-uk-tooltip="{pos:'bottom-left'}" title="主页"></span> Home</a></li>
+                        <li><a href="/"><span class="glyphicon glyphicon-book" data-uk-tooltip="{pos:'bottom-left'}" title="教程"></span> Course</a></li>
+                        <li><a href="/" target="_blank"><span class="glyphicon glyphicon-flash" data-uk-tooltip="{pos:'bottom-left'}" title="源码"></span> Code</a></li>
+                        <li><a href="/"><span class="glyphicon glyphicon-book" data-uk-tooltip="{pos:'bottom-left'}" title="关于我"></span> About</a></li>
+                    </ul><!--/.navbar-left -->
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if __user__ %}
+                        <li class="uk-parent" data-uk-dropdown>
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                            <span class="glyphicon glyphicon-user"> {{ __user__.name }} </span>
+                        </a>
+                            <div class="uk-dropdown uk-dropdown-navbar">
+                            <ul class="uk-nav uk-nav-navbar">
+                                <li><a href="/signout"><iuk-icon-medium class="uk-icon-medium uk-icon-sign-out"></iuk-icon-medium> 退出</a></li>
+                            </ul>
+                        </div>
+                        </li>
+                        {% else %}
+                        <li><a href="/signin"><span class="glyphicon glyphicon-log-in">  Sign In</span></a></li>
+                        <li><a href="/register"><span class="glyphicon glyphicon-pencil"> Register</span></a></li>
+                        {% endif %}
+
+                    </ul><!--/.navbar-right -->
+                </div><!--/.nav-collapse -->
+
+            </div>
+        </nav>
+      </div>
+        <div style="height: 50px;"></div>
+     <!-- content -->
+     {% block content %}
+     {% endblock %}
+     <!-- // content -->
+</body>
+<!--footer -->
+    <footer id="footer">
+        <div class="container text-center">
+            <p>
+                <a target="_blank" href="#" class="uk-icon-button uk-icon-weibo"></a>
+                <a target="_blank" href="#" class="uk-icon-button uk-icon-github"></a>
+                <a target="_blank" href="#" class="uk-icon-button uk-icon-linkedin-square"></a>
+                <a target="_blank" href="#" class="uk-icon-button uk-icon-twitter"></a>
+            </p>
+            <p>Powered by <a href="http://v3.bootcss.com/">Bootstrap</a></p>
+            <p><a href="http://www.miitbeian.gov.cn">粤ICP备16049607号-1</a> © 2016 MyBlog</p>
+            <p><a href="www.qiangtaoli.com" target="_blank"></a>. All rights reserved.</p>
+        </div>
+    </footer>
+<!-- end footer -->
+    <!-- sliding Bar -->
+    <div id="slidingBar" class="uk-offcanvas">
+        <div class="uk-offcanvas-bar">
+            <div class="uk-panel">
+                <ul class="uk-nav uk-nav-offcanvas">
+                    <li class="uk-nav-header">我的博客</li>
+                    <li>
+                        <a data-uk-modal="{target:'#about_blog'}"><i class="uk-icon-info-circle" style="margin-right: 3px;"></i>关于博客<div>about blog</div></a>
+                    </li>
+                    <li class="uk-nav-divider"></li>
+                    <li class="uk-nav-header">管理</li>
+                    {% if __user__.admin %}
+                    <li>
+                        <a target="_blank" href="/manage/blogs/create"><i class="uk-icon-edit" style="margin-right: 3px;"></i>编辑日志<div>Edit  Blog</div></a>
+                    </li>
+                     <li>
+                        <a target="_blank" href="/manage/blogs"><i class="uk-icon-edit" style="margin-right: 3px;"></i>管理日志<div>Manage  Blog</div></a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/manage/users"><i class="uk-icon-edit" style="margin-right: 3px;"></i>管理用户<div>Manage  Blog</div></a>
+                    </li>
+                    {% endif %}
+                    <li class="uk-nav-divider"></li>
+                    <li class="uk-nav-header">友情链接</li>
+                    <li>
+                        <a target="_blank" href="/"><i class="uk-icon-thumbs-o-up" style="margin-right: 3px;"></i>编程</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/"><i class="uk-icon-thumbs-o-up" style="margin-right: 3px;"></i>读书</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/"><i class="uk-icon-thumbs-o-up" style="margin-right: 3px;"></i>Python教程</a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="/"><i class="uk-icon-thumbs-o-up" style="margin-right: 3px;"></i>Git教程</a>
+                    </li>
+                </ul>
+            </div>
+         </div>
+    </div>
+    <!-- sliding Bar Over -->
+	<!--about blog dialog-->
+	<div id="about_blog" class="uk-modal">
+		<div class="uk-modal-dialog">
+			<a class="uk-modal-close uk-close">
+			</a>
+			<article class="uk-article">
+				<p class="uk-article-lead" style="text-align: center;">
+					关于本博客/about blog
+				</p>
+				<hr class="uk-article-divider uk-margin-small">
+				<p>
+					本博客前端基于UIKit自适应框架、采用HTML5+CSS3设计，后台为Python封装aiohttp,采用jinja2进行渲染。
+                    本网站不保证在IE9以下以及某些国产浏览器下的显示效果，为了获得良好的体验，请选择最新版本的浏览器。
+				</p>
+				<p style="text-align: center;">
+					<i class="uk-icon-html5 about_blog_icon" style="color: #19c7f3;"></i>
+					<i class="uk-icon-css3 about_blog_icon" style="color: #f3b319;"></i>
+				</p>
+			</article>
+		</div>
+	</div>
+	<!--about blog dialog-->
+</html>

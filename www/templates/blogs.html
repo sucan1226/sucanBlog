@@ -1,0 +1,110 @@
+{% extends '__base__.html' %}
+
+{% block title %}日志{% endblock %}
+
+{% block beforehead %}
+<script>
+$('.blog-summary').each(function() {
+    $(this).children('*:gt(2)').remove();
+    $(this).append('<p>......</p>');
+    $(this).fadeIn();
+});
+</script>
+{% endblock %}
+</head>
+{% block content %}
+<section>
+    <div class="container content-wrap">
+        <div class="row">
+            <main class="col-sm-9 col-xs-12 ">
+                {% for blog in blogs %}
+                <div class="article_location" data-uk-scrollspy="{cls:'uk-animation-fade', delay:300}">
+				<div class="article_single">
+					<div class="mainBody_passage_single_main_lay">
+						<div class="article_title">
+                            <a href="/blog/{{ blog.id }}" style="text-decoration: none">
+                                <div class="article_title_PC">
+                                    {{ blog.name }}
+                                </div>
+                            </a>
+                            <a href="/blog/{{ blog.id }}">
+                            <div class="article_viewAll" data-uk-tooltip="{pos:'left'}" title="查看全文">
+									<i class="uk-icon-chevron-circle-right"></i>
+								</div>
+                        </a>
+                        </div>
+                        <div class="mainBody_passage_single_main_info_lay">
+                            <span class="mainBody_passage_single_info" data-uk-tooltip="{pos:'bottom-left'}" title="日期/date"><i class="uk-icon-calendar-o" style="margin-right: 3px;"></i>{{ blog.created_at|datetime }}</span>
+                            <span class="mainBody_passage_single_info" data-uk-tooltip="{pos:'bottom-left'}" title="时间/time"><i class="uk-icon-clock-o" style="margin-right: 3px;"></i>{{ blog.created_at|datetime }}</span>
+                            <span class="mainBody_passage_single_info" data-uk-tooltip="{pos:'bottom-left'}" title="分类/tags"><i class="uk-icon-quote-left" style="margin-right: 3px;"></i>personal</span>
+                        </div>
+                        <hr class="uk-article-divider uk-margin-small" />
+                        <div class="article_content blog-summary">
+                            {{ blog.content|safe }}
+                        </div>
+                    </div>
+                </div>
+                    <div class="mainBody_passage_single_line"></div>
+                </div>
+                {% endfor %}
+            </main>
+            <aside class="col-sm-3 hidden-xs">
+			<!--sideBar-->
+			<div class="blog_comments_location uk-visible-large" data-uk-scrollspy="{cls:'uk-animation-fade', delay:500}">
+	<div class=" blog_comments_single"><i class="uk-icon-puzzle-piece" style="margin-right:3px"></i>评论/comments<hr class="uk-margin-small" /><ul class="ds-recent-comments" data-num-items="10" data-show-avatars="0" data-show-time="1" data-show-title="0" data-show-admin="1" data-avatar-size="30" data-excerpt-length="40"></ul></div>
+                <script>
+    if (typeof DUOSHUO !== 'undefined')
+	DUOSHUO.RecentComments && DUOSHUO.RecentComments('.ds-recent-comments');
+</script>
+<script type="text/javascript">
+    var duoshuoQuery = {
+        short_name:"sucanblog",
+        sso:{
+            login: "http://127.0.0.1:9000/signin",//替换为你自己的回调地址
+            logout: "http://127.0.0.1:9000/signout"//替换为你自己的回调地址
+        }};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.charset = 'UTF-8';
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+                </div>
+            </aside>
+            <nav class="col-xs-12 text-center">
+                <ul class="uk-pagination">
+                    {% if page.page_index == 1 %}
+                    <li class="uk-active"><span>1</span></li>
+                    {% else %}
+                    <li><a href="?page=1&size={{page.limit}}" >1</a></li>
+                    {% endif %}
+                    {% if (page.page_index - 1) > 3 %}
+                    <li class="disabled"><span>...</span></li>
+                    {% endif %}
+                    {% for index in range(2, page.page_count) if (index - page.page_index) | abs < 3 %}
+                    {% if page.page_index == index %}
+                    <li class="uk-active"><span>{{index}}</span></li>
+                    {% else %}
+                    <li><a href="?page={{index}}&size={{page.limit}}" >{{index}}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if (page.page_count - page.page_index) > 3 %}
+                    <li class="disabled"><span>...</span></li>
+                    {% endif %}
+                    {% if page.page_count > 1 and page.page_index == page.page_count %}
+                    <li class="uk-active"><span>{{page.page_count}}</span></li>
+                    {% elif page.page_count > 1 %}
+                    <li><a href="?page={{page.page_count}}&size={{page.limit}}" >{{page.page_count}}</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+

@@ -1,0 +1,118 @@
+{% extends '__base__.html' %}
+
+{% block title %}管理{% endblock %}
+
+{% block beforehead %}
+<script>
+$(function () {
+    var vm = new Vue({
+        el:'#vm',
+        data:{
+            table: location.pathname.split('/').pop(),
+            items:[],
+            page:null,
+            models:{
+                'users': {'name': '名字','email':'电子邮箱'},
+                'blogs': {'name': '标题', 'user_name': '作者'}
+            },
+        },
+        computed:{
+            fields:function () {
+                return this.models[this.table]
+            }
+        },
+        ready:function () {
+            this.getItemsByPage(getUrlParams('page'),getUrlParams('size'));
+        },
+        methods:{
+            getItemsByPage: function(page, size) {
+            var self = this;
+            getJSON('/api/' + this.table, {
+                page: page || '1',
+                size: size || '3'
+            }, function (err, data) {
+                $('#loading').hide();
+                self.items = data.items;
+                self.page = data.page;
+            })
+            },
+            delete_item:function (item) {
+                var self = this;
+                if(confirm('确认要删除"' + (item.name) + '"?删除后不可恢复')){
+                    postJSON('/api/' + this.table + item.id + '/delete',function (err,r) {
+                        self.items.$remove(item);
+                        if (self.items.length === 0 && self.page.page_index > 1){
+                            self.getItemsByPage(self.page.page_index - 1,self.page.limit)
+                        }
+                        else if(self.items.length < 3 && self.page.page_index < self.page.page_count ){
+                            self.getItemsByPage(self.page.page_index,self.page.limit)
+                        }
+                    });
+                }
+            },
+            validPage:function (i) {
+                return (i > 1) && (Math.abs(i - this.page.page_index) < 3);
+            },
+            gotoPage:function (page) {
+                return this.getItemsByPage(page,page.limit)
+            }
+        }
+    });
+    $('#vm').show();
+}) ;
+
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="uk-container uk-width-1-1 uk-margin-large-top" id="vm">
+    <ul class="uk-tab">
+        <li :class="['{{table}}'===key ? 'uk-active' : '']" v-for="(key, _) of models"><a :href="'' + key" v-text="key"></a></li>
+    </ul>
+
+    <table class="uk-table uk-table-striped uk-table-hover" id="manage-table">
+        <thead>
+            <tr>
+                <th class="" v-for="title in fields" v-text="title"></th>
+                <th class="uk-width-2-10">创建时间</th>
+                <th class="uk-width-2-10">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="item of items | limitBy page.limit" track-by="id">
+                <td v-for="(key, field) of fields">
+                    <a  v-if="'{{table}}'==='blogs' && key==='name'" :href="'/blog/'+item.id" v-text="item.name"></a>
+                    <span v-else v-text="item[$key]"></span>
+                </td>
+                <td v-text="item.created_at.toDateTime('yyyy-MM-dd')"></td>
+                <!-- <td v-show="'{{table}}' !== 'users' && {{__user__.admin}}"> -->
+                <td>
+                    <a v-show="'{{table}}' === 'blogs'" :href="'blogs/edit?id='+item.id"><i class="uk-icon-edit"></i></a>
+                    <a href="#" v-on:click="delete_item(item)"><i class="uk-icon-trash"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <nav class="uk-margin-top">
+        <ul class="uk-pagination">
+            <li :class="{'uk-active': page.page_index===1}"><!-- 首页 -->
+                <span v-show="page.page_index===1" v-text="1"></span>
+                <a v-else href="#" v-on:click="gotoPage(1)" v-text="1"></a>
+            </li>
+            <li class="disabled" v-show="(page.page_index - 1) > 3"><span>...</span></li>
+
+            <li :class="{'uk-active': page.page_index===i}" v-for="i in page.page_count | filterBy vaildPage"><!-- 当前页左右 -->
+                <span v-show="page.page_index===i" v-text="i"></span>
+                <a v-else href="#" v-on:click="gotoPage(i)" v-text="i"></a>
+            </li>
+
+            <li class="disabled" v-show="(page.page_count - page.page_index) > 3"><span>...</span></li>
+            <li :class="{'uk-active': page.page_index===page.page_count}" v-show="page.page_count > 1"><!-- 尾页 -->
+                <span v-show="page.page_index===page.page_count" v-text="page.page_count"></span>
+                <a v-else href="#" v-on:click="gotoPage(page.page_count)" v-text="page.page_count"></a>
+            </li>
+        </ul>
+    </nav>
+</div>
+{% endblock %}

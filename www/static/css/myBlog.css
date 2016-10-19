@@ -1,0 +1,220 @@
+
+html {
+	background-color: #f8f7f7;
+	font-family: "微软雅黑", "黑体", "宋体", arial;
+}
+a{
+	color: #333333;
+	text-decoration: none;
+}
+a:link {
+	color: #333333;
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+	color: #333333;
+}
+a:hover {
+	text-decoration: none;
+	color: #8618b9;
+}
+a:active {
+	text-decoration: none;
+	color: #ae55d7;
+}
+::selection {
+	color: #FFFFFF;
+	background-color: #8618b9;
+}
+
+/**
+设置页脚的格式
+**/
+#footer {
+    color: #cccccc;
+    background-color: #111;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+}
+
+.content-wrap {
+    margin-top: 40px;
+}
+.blog-post-meta {
+margin-bottom: 25px;
+color: #999;
+}
+
+/* 设置评论框的停靠位置 */
+.blog_comments_location  {
+	float: right;
+}
+
+/* 设置评论的样式*/
+.blog_comments_single {
+	width: 220px;
+	padding: 10px;
+	background: #fefefe;
+	color: #444;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	margin-bottom: 15px;
+}
+
+.blog_comments_single>ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+/* 博客停靠位置*/
+.article_location {
+	margin-right: 25px;
+    margin-bottom: 15px;
+}
+
+.article_single {
+	padding: 15px;   /* 在CSS中padding是指自身边框到自身内部另一个容器边框之间的距离，就是容器内距离。*/
+	background: #fefefe;
+	color: #444;
+	border: 1px solid #ddd;
+	border-radius: 4px     /*为边框制作圆角*/
+}
+.mainBody_passage_single_main_lay {} .mainBody_passage_single_info {
+	font-size: 12px;
+	color: #BBBBBB;
+	margin-right: 5px;
+	cursor: help;
+}
+.article_title {
+	width: 100%;
+	height: auto;
+	overflow: hidden;
+}
+.article_title_PC {
+	font-family: "微软雅黑", "黑体", "宋体", arial;
+	font-size: 1.2em;
+	line-height: 26px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;  /*文本溢出*/
+	color: #333333;
+	text-shadow: 0px 2px 1px #E7E7E7;   /*为博客的titile添加阴影效果*/
+	cursor: pointer;
+	margin-right: 150px;
+}
+.article_title_PC:hover {
+	font-family: "微软雅黑", "黑体", "宋体", arial;
+	font-size: 1.2em;
+	line-height: 26px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: #8618b9;
+	text-shadow: 0px 2px 1px #E7E7E7;
+	cursor: pointer;
+	margin-right: 150px;
+}
+.article_viewAll {
+	background-color: #FFFFFF;
+	text-align: center;
+	padding-left: 15px;
+	padding-right: 15px;
+	border: 1px solid #dedede;
+	border-radius: 15px;
+	font-family: "微软雅黑", "黑体", "宋体", arial;
+	color: #cccccc;
+	text-shadow: 0px 1px 1px #FFFFFF;
+	background-image: -webkit-linear-gradient(-90deg, rgb(234, 234, 234), rgb(247, 247, 247));
+	background-image: linear-gradient(180deg, rgb(234, 234, 234), rgb(247, 247, 247));
+	cursor: pointer;  /*光标呈现为指示链接的指针（一只手）*/
+	float: right;
+}
+.article_viewAll:hover {
+	color: #8618b9;
+}
+.article_viewAll:active {
+	background-color: #ae55d7;
+	text-align: center;
+	padding-left: 15px;
+	padding-right: 15px;
+	border: 1px solid #dedede;
+	border-radius: 15px;
+	font-family: "微软雅黑", "黑体", "宋体", arial;
+	color: #999999;
+	text-shadow: 0px 1px 1px #FFFFFF;
+	background-image: -webkit-linear-gradient(-90deg, rgb(234, 234, 234), rgb(247, 247, 247));
+	background-image: linear-gradient(180deg, rgb(234, 234, 234), rgb(247, 247, 247));
+	cursor: pointer;
+	float: right;
+}
+.article_content {
+	margin-top: 10px;
+	font-family: "微软雅黑", "黑体", "宋体", arial;
+	color: #444444;
+}
+.mainBody_passage_single_line {
+	width: 100%;
+	height: 20px;
+}
+.ds-recent-visitors {
+	padding-left: 0 !important;
+	padding-right: 20px;
+}
+.ds-recent-visitors img {
+	border: 0;
+}
+.ds-recent-comments {
+	padding-left: 0 !important;
+	padding-right: 20px;
+}
+.ds-comment {
+	border: 0 !important;
+	border-bottom: 1px solid #CCCCCC !important;
+}
+
+.guideBar_lay {
+	width: 100%;
+	height: 30px;
+	margin-top: 25px;
+}
+.guideBar_logo {
+	width: 30px;
+	height: 30px;
+	background-color: #ae55d7;
+	line-height: 30px;
+	color: #FFFFFF;
+	border-radius: 15px;
+	border: 1px solid #9f36cf;
+	box-shadow: 0px 0px 10px #cccccc;
+	float: left;
+	cursor: pointer;
+}
+/*在某篇博客的详情页面，显示博客title*/
+.blogname {
+	background-color: #ae55d7;
+	text-align: center;
+	height: 30px;
+	padding-left: 25px;
+	padding-right: 25px;
+	border-radius: 15px;
+	box-shadow: 0px 0px 10px #cccccc;
+	border: 1px solid #9f36cf;
+	text-shadow: 0px 1px 5px #922dc1;
+	line-height: 30px;
+	color: #FFFFFF;
+	text-align: center;
+	font-family: "微软雅黑", "黑体", "宋体", arial;
+	font-size: 22px;
+	float: left;
+	margin-left: 5px;
+	cursor: default;
+	background-image: -webkit-linear-gradient(-90deg, rgb(176, 85, 217), rgb(144, 72, 177));
+	background-image: linear-gradient(180deg, rgb(184, 95, 225), rgb(161, 80, 198))
+}
+
+
+.mainBody_sideBar_multi_lay {
+	float: right;
+}

@@ -1,0 +1,77 @@
+{% extends '__base__.html' %}
+
+{% block title %}{{ blog.name }}{% endblock %}
+
+{% block beforehead %}
+
+<script src="/static/js/marked.min.js"></script>
+
+{% endblock %}
+
+{% block content %}
+    <div class="uk-width-6-10 uk-align-center">
+        <!--GuideBar-->
+		<div class="guideBar_lay">
+            <a href="/">
+			<div id="guideBar_back" class="guideBar_logo" data-uk-tooltip="{pos:'bottom-left'}" title="返回/back" data-uk-scrollspy="{cls:'uk-animation-fade', delay:0}">
+				<i class="uk-icon-chevron-circle-left" style="margin-left: 9px;"></i>
+			</div>
+            </a>
+			<div class="blogname uk-hidden-small" data-uk-scrollspy="{cls:'uk-animation-fade', delay:100}">{{blog.name}}</div>
+		</div>
+		<!--GuideBar over-->
+        <div class="uk-panel uk-panel-box content-wrap">
+            <article class="uk-article">
+            <div class="mainBody_passage_single_main_info_lay">
+                <span class="mainBody_passage_single_info" data-uk-tooltip="{pos:'bottom-left'}" title="日期/date"><i class="uk-icon-calendar-o" style="margin-right: 3px;"></i>{{ blog.created_at|datetime }}</span>
+                <span class="mainBody_passage_single_info" data-uk-tooltip="{pos:'bottom-left'}" title="时间/time"><i class="uk-icon-clock-o" style="margin-right: 3px;"></i>{{ blog.created_at|datetime }}</span>
+                <span class="mainBody_passage_single_info" data-uk-tooltip="{pos:'bottom-left'}" title="分类/tags"><i class="uk-icon-quote-left" style="margin-right: 3px;"></i>personal</span>
+            </div>
+            <hr class="uk-article-divider uk-margin-small" />
+            <p>{{ blog.html_content|safe}}</p>
+                </article>
+            <div class="uk-panel uk-panel-box">
+                本网站以及站内所有图像、设计、项目以及文章版权均归sucan所有，撰写博文耗时费神，请尊重作者的劳动成果，如需转载请告知博主并且在转载文章内注明出处。
+            </div>
+        </div>
+    <!-- 多说评论框 start -->
+        <div class="ds-thread" data-thread-key="{{blog.id}}" data-title="{{blog.name}}" data-url="/blog/{{blog.id}}"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+        <script type="text/javascript">
+        var duoshuoQuery = {
+            short_name:"sucanblog",
+            sso:{
+                login: "http://127.0.0.1:9000/signin",//替换为你自己的回调地址
+               logout: "http://127.0.0.1:9000/signout"//替换为你自己的回调地址
+            }};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+             || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+    <!-- 多说公共JS代码 end -->
+    <!-- share-->
+        <div class="ds-share" data-thread-key="{{blog.id}}" data-title="{{blog.name}}" data-images="" data-content="{{blog.content}}" data-url="/blog/{{blog.id}}">
+            <div class="ds-share-inline">
+                <ul  class="ds-share-icons-16">
+
+                <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+                <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+                <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+                <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+                </ul>
+                <div class="ds-share-icons-more"></div>
+            </div>
+        </div>
+    <!-- end share-->
+    </div>
+{% endblock %}
+
+
